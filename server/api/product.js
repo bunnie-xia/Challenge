@@ -3,6 +3,7 @@ const {Product} = require('../db/models')
 const {isAdmin} = require('./gatekeepers')
 const {Op} = require('sequelize')
 
+// read all products
 router.get('/', async (req, res, next) => {
   try {
     const product = await Product.findAll()
@@ -12,6 +13,7 @@ router.get('/', async (req, res, next) => {
   }
 })
 
+// get specific product
 router.get('/:productId', async (req, res, next) => {
   const pid = req.params.productId
   try {
@@ -22,6 +24,7 @@ router.get('/:productId', async (req, res, next) => {
   }
 })
 
+// create new product
 router.post('/', isAdmin, async (req, res, next) => {
   try {
     if (!req.body.imageUrl) {
@@ -43,6 +46,7 @@ router.post('/', isAdmin, async (req, res, next) => {
   }
 })
 
+// update product
 router.put('/:productId', isAdmin, async (req, res, next) => {
   const id = req.params.productId
   try {
@@ -62,6 +66,7 @@ router.put('/:productId', isAdmin, async (req, res, next) => {
   }
 })
 
+// delete/update product: set inventory to '0', showing as 'out of stock'
 router.delete('/:productId', isAdmin, async (req, res, next) => {
   const id = req.params.productId
   try {
@@ -76,6 +81,7 @@ router.delete('/:productId', isAdmin, async (req, res, next) => {
   }
 })
 
+// search product by keyword
 router.get('/search/:keyword', async (req, res, next) => {
   const keyword = req.params.keyword
   try {

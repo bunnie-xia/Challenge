@@ -3,6 +3,7 @@ const {User} = require('../db/models')
 const {isAdmin, userLoggedIn} = require('./gatekeepers')
 module.exports = router
 
+// get all users
 router.get('/', isAdmin, async (req, res, next) => {
   try {
     const users = await User.findAll({
@@ -14,6 +15,7 @@ router.get('/', isAdmin, async (req, res, next) => {
   }
 })
 
+// get specific user
 router.get('/:userId', userLoggedIn, async (req, res, next) => {
   const uid = req.params.userId
   try {
@@ -31,6 +33,7 @@ router.get('/:userId', userLoggedIn, async (req, res, next) => {
   }
 })
 
+// update user info
 router.put('/:userId', async (req, res, next) => {
   //add middleware
   try {
